@@ -95,7 +95,6 @@
          USB interfaces.  If the device doesn't want to support tething over USB this should
          be empty.  An example would be "usb.*" -->
     <string-array translatable="false" name="config_tether_usb_regexs">
-	<item>usb0</item>
 	<item>rndis0</item>
     </string-array>
 
@@ -118,6 +117,9 @@
     <string-array translatable="false" name="config_tether_wifi_regexs">
         <item>wlan0</item>
     </string-array>
+
+    <!-- Set and Unsets WiMAX -->
+    <bool name="config_wimaxEnabled">false</bool>
 
     <array name="config_tether_wimax_regexs" />
 
@@ -142,9 +144,6 @@
     <integer-array translatable="false" name="config_tether_upstream_types">
         <item>0</item>
         <item>1</item>
-	<item>4</item>
-        <item>5</item>
-        <item>7</item>
     </integer-array>
 
     <!-- String containing the apn value for tethering.  May be overriden by secure settings
@@ -168,17 +167,6 @@
 
     <!-- XXXXXX END OF RESOURCES USING WRONG NAMING CONVENTION -->
 
-    <!-- The number of degrees to rotate the display when the keyboard is open. -->
-    <integer name="config_lidOpenRotation">-1</integer>
-
-    <!-- The number of degrees to rotate the display when the device is in a desk dock.
-         A value of -1 means no change in orientation by default. -->
-    <integer name="config_deskDockRotation">-1</integer>
-
-    <!-- The number of degrees to rotate the display when the device is in a car dock.
-         A value of -1 means no change in orientation by default. -->
-    <integer name="config_carDockRotation">-1</integer>
-
     <!-- Control whether being in the desk dock (and powered) always
          keeps the screen on when charging. -->
     <integer name="config_deskDockKeepsScreenOn">0</integer>
@@ -196,12 +184,6 @@
          screen orientation.  This defaults to true because putting a device in
          a car dock make the accelerometer more a physical input (like a lid). -->
     <bool name="config_carDockEnablesAccelerometer">true</bool>
-
-    <!-- Indicate whether the lid state impacts the accessibility of
-         the physical keyboard.  0 means it doesn't, 1 means it is accessible
-         when the lid is open, 2 means it is accessible when the lid is
-         closed.  The default is 1. -->
-    <integer name="config_lidKeyboardAccessibility">1</integer>
 
     <!-- Indicate whether the lid state impacts the accessibility of
          the physical keyboard.  0 means it doesn't, 1 means it is accessible
@@ -293,11 +275,11 @@
          than the size of the config_autoBrightnessLevels array.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-	<item>14</item>
-	<item>48</item>
-	<item>88</item>
-	<item>203</item>
-	<item>255</item>
+        <item>18</item>
+        <item>60</item>
+        <item>110</item>
+        <item>175</item>
+        <item>255</item>
     </integer-array>
 
     <!-- Array of output values for button backlight corresponding to the LUX values
@@ -305,10 +287,10 @@
          than the size of the config_autoBrightnessLevels array.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessButtonBacklightValues">
-		<item>3</item>
-		<item>3</item>
-		<item>3</item>
-		<item>3</item>
+		<item>255</item>
+		<item>0</item>
+		<item>0</item>
+		<item>0</item>
 		<item>0</item>
     </integer-array>
 
@@ -317,7 +299,7 @@
          than the size of the config_autoBrightnessLevels array.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessKeyboardBacklightValues">
-		<item>0</item>
+		<item>1</item>
 		<item>0</item>
 		<item>0</item>
 		<item>0</item>
@@ -395,5 +377,21 @@
 	 For example, a device with Home, Back and Menu keys would set this
 	 config to 7. -->
     <integer name="config_deviceHardwareKeys">7</integer>
+
+    <!-- Flag indicating whether the keyguard should be bypassed when
+         the slider is open.  This can be set or unset depending how easily
+         the slider can be opened (for example, in a pocket or purse). -->
+    <bool name="config_bypass_keyguard_if_slider_open">true</bool>
+
+    <!-- ace - match UCLJ3 -->
+    <bool name="config_ui_enableFadingMarquee">true</bool>
+
+    <!-- Boolean indicating if restoring network selection should be skipped -->
+    <!-- The restoring is handled by modem if it is true -->
+    <bool translatable="false" name="skip_restoring_network_selection">true</bool>
+
+    <!-- Boolean indicating if current platform supports bluetooth wide band
+         speech -->
+    <bool name="config_bluetooth_wide_band_speech">false</bool>
 
 </resources>
