@@ -1,0 +1,144 @@
+# Add device specific blobs here
+
+# HAL
+lib/hw/gralloc.tegra.so
+lib/hw/hwcomposer.tegra.so
+lib/hw/gps.tegra.so
+lib/hw/camera.tegra.so
+lib/hw/sensors.n1.so
+
+# EGL
+lib/egl/libEGL_tegra.so
+lib/egl/libEGL_perfhud.so
+lib/egl/libGLESv1_CM_tegra.so
+lib/egl/libGLESv1_CM_perfhud.so
+lib/egl/libGLESv2_tegra.so
+lib/egl/libGLESv2_perfhud.so
+
+# RIL files
+lib/libril.so
+lib/libsec-ril.so
+lib/libsecril-client.so
+
+# Sensors
+lib/libakm.so
+lib/libmpl.so
+lib/libmllite.so
+lib/libmlplatform.so
+
+# WIFI
+etc/wifi/bcm4330_apsta.bin
+etc/wifi/bcm4330_mfg.bin
+etc/wifi/bcm4330_p2p.bin
+etc/wifi/bcm4330_sta.bin
+etc/wifi/nvram_mfg.txt
+etc/wifi/nvram_net.txt
+bin/nv_hciattach
+
+# NVIDIA
+lib/libnvapputil.so
+lib/libnvasfparserhal.so
+lib/libnvaviparserhal.so
+lib/libnvavp.so
+lib/libnvos.so
+lib/libnvomx.so
+lib/libnvomxadaptor.so
+lib/libnvomxilclient.so
+lib/libnvrm.so
+lib/libnvrm_graphics.so
+lib/libnvddk_2d_v2.so
+lib/libnvddk_2d.so
+lib/libnvmm.so
+lib/libnvmm_asfparser.so
+lib/libnvmm_audio.so
+lib/libnvmm_aviparser.so
+lib/libnvmm_camera.so
+lib/libnvmm_contentpipe.so
+lib/libnvmm_image.so
+lib/libnvmm_manager.so
+lib/libnvmm_msaudio.so
+lib/libnvmm_parser.so
+lib/libnvmm_service.so
+lib/libnvmm_utils.so
+lib/libnvmm_video.so
+lib/libnvmm_vc1_video.so
+lib/libnvmm_writer.so
+lib/libnvmmlite.so
+lib/libnvmmlite_audio.so
+lib/libnvmmlite_utils.so
+lib/libnvmmlite_video.so
+lib/libnvodm_dtvtuner.so
+lib/libnvodm_hdmi.so
+lib/libnvodm_imager.so
+lib/libnvodm_misc.so
+lib/libnvodm_query.so
+lib/libnvparser.so
+lib/libnvsm.so
+lib/libnvtestio.so
+lib/libnvtestresults.so
+lib/libnvtvmr.so
+lib/libnvwinsys.so
+lib/libnvwsi.so
+lib/libcgdrv.so
+lib/libardrv_dynamic.so
+
+# NVIDIA Firmware
+etc/firmware/nvmm_aacdec.axf
+etc/firmware/nvmm_adtsdec.axf
+etc/firmware/nvmm_h264dec.axf
+etc/firmware/nvmm_jpegdec.axf
+etc/firmware/nvmm_jpegenc.axf
+etc/firmware/nvmm_manager.axf
+etc/firmware/nvmm_mp3dec.axf
+etc/firmware/nvmm_mpeg4dec.axf
+etc/firmware/nvmm_service.axf
+etc/firmware/nvmm_vc1dec_2x.axf
+etc/firmware/nvmm_vc1dec.axf
+etc/firmware/nvmm_wavdec.axf
+etc/firmware/nvmm_wmadec.axf
+etc/firmware/nvmm_wmaprodec.axf
+etc/firmware/nvrm_avp.bin
+
+# Broadcom Firmware
+etc/firmware/bcm4330.hcd
+
+# OMX
+lib/libsomxcmn.so
+lib/libsomxcore.so
+lib/libsomxaacd.so
+lib/libsomxaace.so
+lib/libsomxac3d.so
+lib/libsomxamrd.so
+lib/libsomxflacd.so
+lib/libsomxmp3d.so
+lib/libsomxmp43d.so
+lib/libsomxsr263d.so
+lib/libsomxwmad.so
+lib/libsomxwmv7d.so
+lib/libsomxwmv8d.so
+
+lib/libsavsac.so
+lib/libsavscmn.so
+lib/libsavsff.so
+lib/libsavsmeta.so
+lib/libsavsvc.so
+lib/libsthmb.so
+
+lib/libstagefrighthw.so
+
+# Camera
+cameradata/datapattern_420sp.yuv
+cameradata/datapattern_front_420sp.yuv
+cameradata/RS_M5LS.bin
+
+# BT
+bin/brcm_patchram_plus
+
+# TVOut
+bin/bintvoutservice
+lib/libtvoutinterface.so
+lib/libtvoutservice.so
+lib/libtvout_jni.so
+
+# Other files
+bin/nvcpud
