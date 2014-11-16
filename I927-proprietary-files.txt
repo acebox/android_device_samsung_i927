@@ -16,9 +16,10 @@ lib/egl/libGLESv2_tegra.so
 lib/egl/libGLESv2_perfhud.so
 
 # RIL files
+# bin/rild
 lib/libril.so
-lib/libsec-ril.so
 lib/libsecril-client.so
+lib/libsec-ril.so
 
 # Sensors
 lib/libakm.so

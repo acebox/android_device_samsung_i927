@@ -25,6 +25,12 @@ on init
     symlink /mnt/sdcard /sdcard
 
    # mkdir /mnt/sdcard2 0000 system system
+# MHL
+      chown system radio /sys/devices/platform/mhl/MHD_file
+      chmod 0644 /sys/devices/platform/mhl/MHD_file
+
+# add booting sound property 
+	setprop audioflinger.bootsnd 1
 
 on fs
     mount ext4 /dev/block/platform/sdhci-tegra.3/by-num/p2 /system wait ro
@@ -43,12 +49,74 @@ on fs
 
     mount ext4 /dev/block/platform/sdhci-tegra.3/by-num/p3 /cache wait noatime nosuid nodev journal_async_commit,nodelalloc,errors=panic
     # For symbolic_link
-    mount ext4 /dev/block/mmcblk0p11 /preload nosuid nodev noatime wait ro
+#   mount ext4 /dev/block/mmcblk0p11 /preload nosuid nodev noatime wait ro
     mkdir /mnt/modem 0770 radio system
 	
     # MTP Device permission.
     chmod 0660 /dev/usb_mtp_gadget
     chown system system /dev/usb_mtp_gadget
+
+on post-fs-data
+    # create csc file for voice mail number
+    mkdir /data/misc/radio 0774 radio radio
+
+    # SEC_SystemSW/ create anr & log directory
+    mkdir /data/log 0775 system log
+    mkdir /data/anr 0775 system system
+    chown system log /data/log
+    chown system system /data/anr
+    chmod 0775 /data/log
+    chmod 0775 /data/anr
+    
+#[ SEC_MM_DRM
+    # ace - This seems to be for saving drmdatabases that exist in GingerBread going to ICS
+    # [ save OMA DB, when upgrading from GB to ICS    
+    mkdir /data/system/databases 0771 system system
+    copy /data/data/com.sec.android.providers.drm/databases/drmdatabase.db /data/system/databases/drmdatabase.db
+    chown system system /data/system/databases/drmdatabase.db
+    chmod 0774 /data/system/databases/drmdatabase.db	
+    # ]
+    
+    # DRM directory creation
+    mkdir /system/etc/security/.drm 0775
+    chown root root /system/etc/security/.drm
+    chmod 0775 /system/etc/security/.drm
+
+    # Added for Playready DRM Support
+    mkdir /data/data/.drm 0775
+    chown drm system /data/data/.drm
+    chmod 0775 /data/data/.drm
+    mkdir /data/data/.drm/.playready 0775
+    chown drm system /data/data/.drm/.playready
+    chmod 0775 /data/data/.drm/.playready
+
+    # Added drm folder to copy drm plugins
+    mkdir /system/lib/drm 0775
+    chown root root /system/lib/drm
+    chmod 0775 /system/lib/drm
+
+    # DivX DRM
+    mkdir /efs/.files 0775
+    mkdir /efs/.files/.dx1 0775
+    mkdir /efs/.files/.dm33 0775
+    mkdir /efs/.files/.mp301 0775
+    chown media system /efs/.files/.dx1
+    chown media system /efs/.files/.dm33
+    chown media system /efs/.files/.mp301
+    chmod 0775 /efs/.files/.dx1
+    chmod 0775 /efs/.files/.dm33
+    chmod 0775 /efs/.files/.mp301
+#]    
+
+    # create fota delta dir
+    mkdir /data/fota_test 0775 system log
+    chown system log /data/fota_test
+    chmod 0775 /data/fota_test
+    mkdir /cache/fota 0775 system cache
+    chmod 0775 /cache/fota
+
+	# Set indication (checked by vold) that we have finished this action (used for encryption).
+    setprop vold.post_fs_data_done 1
 
 on boot
     mkdir /efs/wifi
@@ -66,16 +134,24 @@ on boot
     mkdir /data/nvcam 0775 system system
     chown dhcp dhcp /data/misc/dhcp
     mkdir /data/wifi 0770 wifi wifi
-    mkdir /data/misc/radio 0775 radio system
+#   mkdir /data/misc/radio 0775 radio system
+
+	# Hdcp
+    chown system system /dev/nvhdcp1
+    chmod 0660 /dev/nvhdcp1
+    chown system system /system/etc/hdmi/dectable.dat
+    chmod 0440 /system/etc/hdmi/dectable.dat
+    chown system system /system/etc/hdmi/dectable1.dat
+    chmod 0440 /system/etc/hdmi/dectable1.dat
 
 # external storage emulation
 #    mkdir /data/media 0775 media_rw media_rw
 #    chown media_rw media_rw /data/media
 
 # IMEI
-    mkdir /efs/imei 0775 radio system
-    chown radio system /efs/imei
-    chmod 775 /efs/imei
+#   mkdir /efs/imei 0775 radio system
+#   chown radio system /efs/imei
+#   chmod 775 /efs/imei
 
 # OTG Test
     chown system radio /sys/class/host_notify/usb_otg/booster
@@ -110,49 +186,24 @@ on boot
     chown system audio /sys/power/suspend/mode
     chown system audio /sys/devices/virtual/jack/jack_reselector/reselect_jack
 
-# backlight
+# backlight (N1_ICS)
     chown system system /sys/class/backlight/pwm-backlight/brightness
+    chown system system /sys/class/misc/melfas_touchkey/brightness
 
-# LCD/CMC623
-    chmod 664 /sys/devices/virtual/mdnie/cmc623-ext/set_bypass
-    chmod 664 /sys/devices/virtual/mdnie/cmc623-ext/show_regs
-    chmod 664 /sys/devices/virtual/mdnie/cmc623-ext/read_reg
-    chmod 664 /sys/devices/virtual/mdnie/cmc623-ext/set_reg
+# STMPE QWERTY backlight
+#	chown system radio /sys/devices/virtual/sec/sec_stmpe_bl/backlight
+#	chown system system /sys/class/sec/sec_stmpe_bl/backlight
+	chown system radio /sys/class/sec/sec_stmpe_bl/backlight
 
-    chmod 664 /sys/devices/virtual/mdnie/mdnie/color_saturation
-    chmod 664 /sys/devices/virtual/mdnie/mdnie/color_black
-    chmod 664 /sys/devices/virtual/mdnie/mdnie/color_white
-    chmod 664 /sys/devices/virtual/mdnie/mdnie/lightsensor_file_state
-    chmod 664 /sys/devices/virtual/mdnie/mdnie/cabc
-    chmod 664 /sys/devices/virtual/mdnie/mdnie/outdoor
-    chmod 664 /sys/devices/virtual/mdnie/mdnie/mode
-    chmod 664 /sys/devices/virtual/mdnie/mdnie/scenario
-
+# LCD
     chmod 664 /sys/devices/virtual/sec/sec_tune_lcd/lcdtype
     chmod 664 /sys/devices/virtual/sec/sec_tune_lcd/lcd_onoff
-
-    chmod 664 /sys/devices/virtual/sec/sec_tune_cmc623/bypassonoff
-    chmod 664 /sys/devices/virtual/sec/sec_tune_cmc623/cabconoff
-
-    chown system radio /sys/devices/virtual/mdnie/cmc623-ext/set_bypass
-    chown system radio /sys/devices/virtual/mdnie/cmc623-ext/show_regs
-    chown system radio /sys/devices/virtual/mdnie/cmc623-ext/read_reg
-    chown system radio /sys/devices/virtual/mdnie/cmc623-ext/set_reg
-
-    chown system radio /sys/devices/virtual/mdnie/mdnie/color_saturation
-    chown system radio /sys/devices/virtual/mdnie/mdnie/color_black
-    chown system radio /sys/devices/virtual/mdnie/mdnie/color_white
-    chown system radio /sys/devices/virtual/mdnie/mdnie/lightsensor_file_state
-    chown system media_rw /sys/devices/virtual/mdnie/mdnie/cabc
-    chown system media_rw /sys/devices/virtual/mdnie/mdnie/outdoor
-    chown system media_rw /sys/devices/virtual/mdnie/mdnie/mode
-    chown system media_rw /sys/devices/virtual/mdnie/mdnie/scenario
 
     chown system radio /sys/devices/virtual/sec/sec_tune_lcd/lcdtype
     chown system radio /sys/devices/virtual/sec/sec_tune_lcd/lcd_onoff
 
-    chown system radio /sys/devices/virtual/sec/sec_tune_cmc623/bypassonoff
-    chown system radio /sys/devices/virtual/sec/sec_tune_cmc623/cabconoff
+    chmod 664 /sys/class/backlight/pwm-backlight/device/acl_set
+    chown system media_rw /sys/class/backlight/pwm-backlight/device/acl_set
 
 # Sensor
     chmod 666 /dev/nvhost-ctrl
@@ -197,6 +248,22 @@ on boot
     symlink /system/vendor/firmware/app /data/rfs/app
     symlink /mnt/modem/data/factory /data/rfs/data/factory
 
+# Define TCP buffer sizes for various networks
+#   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
+    setprop net.tcp.buffersize.default	6144,87380,110208,6144,16384,110208
+    setprop net.tcp.buffersize.wifi		62144,524288,1048576,262144,524288,1048576
+    setprop net.tcp.buffersize.lte		524288,1048576,2560000,262144,524288,1048576
+    setprop net.tcp.buffersize.umts		6144,87380,110208,6144,16384,110208
+    setprop net.tcp.buffersize.hspa		6144,87380,262144,6144,16384,262144
+    setprop net.tcp.buffersize.hsdpa	4094,87380,704512,4096,16384,110208
+    setprop net.tcp.buffersize.hsupa	4094,87380,704512,4096,16384,262144
+    setprop net.tcp.buffersize.hspap	4094,87380,704512,4096,16384,262144
+    setprop net.tcp.buffersize.gprs		6144,8760,11680,6144,8760,11680
+    setprop net.tcp.buffersize.edge		6144,26280,35040,6144,16384,35040   
+
+# Device Encryption by B2B Security Lab. 
+    setprop ro.crypto.keyfile.userdata /efs/metadata
+
 # N1_ICS
 # GPIO BB access for user radio
 #    chown radio system /sys/class/gpio/gpio169/value
@@ -223,26 +290,28 @@ on boot
 
 # COM port settings
     symlink /dev/ttyACM3 /dev/log_modem
+    chmod 775 /data/rfs/data/debug
 
 # Default Read Ahead value for sdcards
-#    write /sys/block/mmcblk0/queue/read_ahead_kb 2048
-#    write /sys/block/mmcblk1/queue/read_ahead_kb 2048
+	write /sys/block/mmcblk0/queue/read_ahead_kb 2048
+	write /sys/block/mmcblk1/queue/read_ahead_kb 2048
 
+# ace - few gps changes as per: https://github.com/CyanogenMod/android_device_samsung_i9103/commit/e237808e1bd996059791ea871237873c271f9bbd
 # GPS
-  chown root system /dev/ttyHS0
-  chmod 0664 /dev/ttyHS0
+	chown radio system /dev/ttyHS0
+	chmod 0664 /dev/ttyHS0
 
-  mkdir /data/gps 0771 system system
-  chown system system /data/gps
+	mkdir /data/gps 0771 radio system
+	chown radio system /data/gps
 	
-  chmod 0664 /sys/class/sec/gps/GPS_PWR_EN/value
-  chown root system /sys/class/sec/gps/GPS_PWR_EN/value
+	chmod 0664 /sys/class/sec/gps/GPS_PWR_EN/value
+	chown radio system /sys/class/sec/gps/GPS_PWR_EN/value
   
-  chmod 0664 /sys/class/sec/gps/GPS_nRST/value
-  chown root system /sys/class/sec/gps/GPS_nRST/value
+	chmod 0664 /sys/class/sec/gps/GPS_nRST/value
+	chown radio system /sys/class/sec/gps/GPS_nRST/value
 
 # ko files for FM Radio
-    insmod /lib/modules/Si4709_driver.ko
+#	insmod /lib/modules/Si4709_driver.ko
 
 # Vibetonz
     chmod 0660 /dev/tspdrv
@@ -280,10 +349,12 @@ on boot
 #SISO-PLAYREADY-CHANGES
 
 # Permissions for Camera
+    chown system system /sys/class/camera/rear/rear_flash
+    chmod 0775 /sys/class/camera/rear/rear_flash
     chown system system /sys/class/camera/rear/rear_camtype
     chmod 0775 /sys/class/camera/rear/rear_camtype
-    chown system system /sys/class/camera/rear/rear_flash
-    chmod 0776 /sys/class/camera/rear/rear_flash
+    chown system system /sys/class/camera/rear/rear_camfw
+    chmod 0775 /sys/class/camera/rear/rear_camfw
     chown system system /sys/class/camera/front/front_camtype
     chmod 0775 /sys/class/camera/front/front_camtype
 
@@ -331,8 +402,36 @@ on boot
 	chown system radio /sys/class/power_supply/battery/batt_charging_source
 	chown system radio /sys/class/power_supply/battery/batt_lp_charging
 
+service cpboot-daemon /sbin/cbd -d -o t -p 7
+    class main
+    user root
+	group radio cache inet misc audio log sdcard_rw qcom_oncrpc qcom_diag
+#	group radio cache inet misc audio sdcard_r sdcard_rw qcom_oncrpc qcom_diag log
+#   group radio cache inet misc audio sdcard_rw log
+
+#service DR-deamon /system/bin/drexe
+#    class main
+#    user root
+#    group system radio inet net_raw
+
+#service mobex-daemon /system/bin/npsmobex
+#    class main
+#    user system
+#    group system radio inet sdcard_rw
+
+#for samsung boot sound
+service playsound /system/bin/playsound
+	class main
+	user media
+	group system
+	disabled
+	oneshot
+#for samsung boot sound
+
+#service wpa_supplicant /system/bin/wpa_supplicant \
+#    -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf -e/data/misc/wifi/entropy.bin
 service wpa_supplicant /system/bin/wpa_supplicant \
-    -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf -e/data/misc/wifi/entropy.bin
+    -Dnl80211 -puse_p2p_group_interface=1 -e/data/misc/wifi/entropy.bin
 #   we will start as root and wpa_supplicant will switch to user wifi
 #   after setting up the capabilities required for WEXT
 #   user wifi
@@ -381,6 +480,12 @@ service iprenew_p2p /system/bin/dhcpcd -n
     class main
     disabled
     oneshot
+
+#Tvout
+service TvoutService_C /system/bin/bintvoutservice
+    class main
+    user system
+    group graphics
 
 #for WiFi MFG(TestMode)
 service mfgloader /system/bin/mfgloader
@@ -451,20 +556,27 @@ service bt_dut_cmd /system/bin/bcm_dut
 #    start recoveryd
 
 # test mode for RIL: Should probably be removed from production phones
-service ril-daemon-test /system/bin/rild
-    socket rild-testmode stream 666 root radio
-    socket rild-debug stream 660 radio system
-    user root
-    group radio cache inet misc audio sdcard_rw
-    disabled
+#service ril-daemon-test /system/bin/rild
+#    socket rild-testmode stream 666 root radio
+#    socket rild-debug stream 660 radio system
+#    user root
+#    group radio cache inet misc audio sdcard_rw
+#    disabled
 
-on property:ril.testmode=1
-    stop ril-daemon
-    start ril-daemon-test
+#on property:ril.testmode=1
+#    stop ril-daemon
+#    start ril-daemon-test
 
-on property:ril.testmode=0
-    stop ril-daemon-test
-    start ril-daemon
+#on property:ril.testmode=0
+#    stop ril-daemon-test
+#    start ril-daemon
+
+## Avoid receiving the power-off from the framework
+## to prevent radio init issues in the next boot
+on property:sys.shutdown.requested=1
+ stop ril-daemon
+on property:sys.shutdown.requested=1recovery
+ stop ril-daemon
 
 #on property:persist.sys.storage_preload=1
 #    mount ext4 /dev/block/mmcblk0p11 /preload nosuid nodev noatime wait ro
@@ -481,17 +593,17 @@ service TvoutService_C /system/bin/bintvoutservice
 # End of testmode patches.
 
 # Power management settings
-on property:sys.boot_completed=1
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 216000
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1000000
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 216000
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1000000
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpufreq/interactive/go_maxspeed_load 80
-    write /sys/devices/system/cpu/cpufreq/interactive/boost_factor 2
-    write /sys/devices/system/cpu/cpufreq/interactive/sustain_load 80
-    write /sys/module/cpuidle/parameters/lp2_in_idle 1
+# on property:sys.boot_completed=1
+#    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 216000
+#    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1000000
+#    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
+#    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 216000
+#    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1000000
+#    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
+#    write /sys/devices/system/cpu/cpufreq/interactive/go_maxspeed_load 80
+#    write /sys/devices/system/cpu/cpufreq/interactive/boost_factor 2
+#    write /sys/devices/system/cpu/cpufreq/interactive/sustain_load 80
+#    write /sys/module/cpuidle/parameters/lp2_in_idle 1
 
 # Vibetonz
 service immvibed /system/bin/immvibed

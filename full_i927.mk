@@ -29,7 +29,6 @@ $(call inherit-product, device/samsung/i927/i927.mk)
 # Device Locales (default language first, screen resolutions last)
 PRODUCT_LOCALES := en_US en_GB de_DE es_ES fr_FR it_IT hdpi xhdpi mdpi nodpi
 
-
 # Discard inherited values and use our own instead.
 PRODUCT_NAME := full_i927
 PRODUCT_DEVICE := i927

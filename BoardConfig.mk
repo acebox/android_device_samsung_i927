@@ -47,13 +47,15 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 # Use this flag if the board has a ext4 partition larger than 2gb
 BOARD_HAS_LARGE_FILESYSTEM := true
 
-TARGET_KERNEL_SOURCE := kernel/samsung/n1
-TARGET_KERNEL_CONFIG := tegra_bose_defconfig
-
 TARGET_NO_KERNEL := false
 TARGET_NO_RECOVERY := false
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
+
+# Kernel
+# TARGET_KERNEL_SOURCE := kernel/samsung/n1
+TARGET_KERNEL_SOURCE := kernel/samsung/litekernel
+TARGET_KERNEL_CONFIG := tegra_bose_defconfig
 
 # Kernel Modules
 KERNEL_MODULES_DIR := /system/lib/modules

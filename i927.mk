@@ -6,14 +6,21 @@
 
 LOCAL_PATH := device/samsung/i927
 
+# Set true if you want .odex files
+DISABLE_DEXPREOPT := false
+
+# HAL
 PRODUCT_PACKAGES += \
-    libOmxCore \
-    libOmxVidEnc \
-    sec_touchscreen.kcm \
-    dexpreopt \
-    SamsungServiceMode \
-    Camera \
-    librs_jni
+    sensors.n1 \
+    lights.n1 \
+    gps.tegra \
+    camera.tegra \
+    gralloc.tegra \
+    hwcomposer.tegra \
+    audio.primary.n1 \
+    audio_policy.n1 \
+    audio.a2dp.default \
+    sec_touchscreen.kcm
 
 # Charger
 PRODUCT_PACKAGES += \
@@ -26,17 +33,17 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     setup_fs
 
-# HAL
+# Other Packages
+#   Camera \
 PRODUCT_PACKAGES += \
-    sensors.n1 \
-    lights.n1 \
-    gps.tegra \
-    camera.tegra \
-    gralloc.tegra \
-    hwcomposer.tegra \
-    audio.primary.n1 \
-    audio_policy.n1 \
-    audio.a2dp.default
+    libv8 \
+	libtinyalsa \
+    com.android.future.usb.accessory \
+    libOmxCore \
+    libOmxVidEnc \
+    dexpreopt \
+    SamsungServiceMode \
+    librs_jni
 
 # INIT-scripts
 PRODUCT_COPY_FILES += \
