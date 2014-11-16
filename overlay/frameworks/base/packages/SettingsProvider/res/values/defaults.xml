@@ -17,18 +17,8 @@
 */
 -->
 <resources>
-	<!-- ace - personal preferences -->
-    <bool name="def_auto_time">false</bool>
-    <bool name="def_auto_time_zone">false</bool>
-
     <bool name="def_accelerometer_rotation">true</bool>
     <bool name="def_screen_brightness_automatic_mode">true</bool>
-
-    <!-- Unknown Sources on by default -->
-    <bool name="def_install_non_market_apps">true</bool>
-
-    <!-- Unlink Notifications and ringer volume -->
-    <bool name="def_notifications_use_ring_volume">false</bool>
 
     <!-- Screen timeout default = 60 seconds -->
     <integer name="def_screen_off_timeout">60000</integer>

@@ -55,8 +55,14 @@ TARGET_NO_RECOVERY := false
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
 
+# Kernel Modules
+KERNEL_MODULES_DIR := /system/lib/modules
+
+# Headers
+TARGET_SPECIFIC_HEADER_PATH := device/samsung/i927/include
+
 # RIL
-BOARD_USES_LIBSECRIL_STUB := false
+BOARD_USES_LIBSECRIL_STUB := true # false
 
 # 3G
 BOARD_MOBILEDATA_INTERFACE_NAME := "rmnet0"
@@ -90,7 +96,7 @@ BOARD_WPA_SUPPLICANT_DRIVER     := NL80211
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
 BOARD_HOSTAPD_DRIVER            := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB       := lib_driver_cmd_bcmdhd
-WIFI_DRIVER_MODULE_PATH     	:= "/lib/modules/dhd.ko"
+WIFI_DRIVER_MODULE_PATH     	:= "/system/lib/modules/dhd.ko"
 WIFI_DRIVER_FW_PATH_PARAM 	:= "/sys/module/dhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA     	:= "/system/etc/wifi/bcm4330_sta.bin"
 WIFI_DRIVER_FW_PATH_AP      	:= "/system/etc/wifi/bcm4330_apsta.bin"
@@ -122,7 +128,7 @@ BOARD_CHARGER_RES := device/samsung/i927/res/charger
 BOARD_SUPPRESS_EMMC_WIPE := true
 
 # Recovery
-TARGET_RECOVERY_INITRC := device/samsung/i927/recovery.rc
+TARGET_RECOVERY_INITRC := device/samsung/i927/recovery/recovery.rc
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/i927/recovery/recovery_keys.c
 BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/i927/recovery/graphics.c
 
