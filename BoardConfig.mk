@@ -42,26 +42,27 @@ BOARD_BOOTIMAGE_PARTITION_SIZE     := 8388608
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 8000000
 BOARD_SYSTEMIMAGE_PARTITION_SIZE   := 629145600
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 2147483648
-BOARD_FLASH_BLOCK_SIZE := 4096
+BOARD_FLASH_BLOCK_SIZE := 2048
+#BOARD_FLASH_BLOCK_SIZE := 4096
 
 # Use this flag if the board has a ext4 partition larger than 2gb
 BOARD_HAS_LARGE_FILESYSTEM := true
-
-TARGET_NO_KERNEL := false
-TARGET_NO_RECOVERY := false
-TARGET_NO_BOOTLOADER := true
-TARGET_NO_RADIOIMAGE := true
 
 # Kernel
 # TARGET_KERNEL_SOURCE := kernel/samsung/n1
 TARGET_KERNEL_SOURCE := kernel/samsung/litekernel
 TARGET_KERNEL_CONFIG := tegra_bose_defconfig
 
-# Kernel Modules
+# Headers
+TARGET_SPECIFIC_HEADER_PATH := device/samsung/glide/include
+
+# Modules
 KERNEL_MODULES_DIR := /system/lib/modules
 
-# Headers
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/i927/include
+TARGET_NO_KERNEL := false
+TARGET_NO_RECOVERY := false
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_RADIOIMAGE := true
 
 # RIL
 BOARD_USES_LIBSECRIL_STUB := true # false
@@ -79,6 +80,7 @@ BOARD_SECOND_CAMERA_DEVICE := true
 # Graphics
 BOARD_EGL_CFG := device/samsung/i927/configs/egl.cfg
 USE_OPENGL_RENDERER := true
+TARGET_ELECTRONBEAM_FRAMES				:= 15
 
 # Enable WEBGL in WebKit
 ENABLE_WEBGL := true
@@ -86,26 +88,45 @@ ENABLE_WEBGL := true
 # HWComposer
 BOARD_USES_HWCOMPOSER := true
 
+# OMX
+# BOARD_USES_PROPRIETARY_OMX		:= SAMSUNG
+# BOARD_HAVE_CODEC_SUPPORT 		:= SAMSUNG_CODEC_SUPPORT
+# COMMON_GLOBAL_CFLAGS 			+= -DSAMSUNG_OMX
+# COMMON_GLOBAL_CFLAGS 			+= -DSAMSUNG_CODEC_SUPPORT
+
+# Lights
+TARGET_PROVIDES_LIBLIGHTS := true # false
+
+# Akmd
+BOARD_VENDOR_USE_AKMD := akm8975
+BUILD_AKMD := true
+
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
+
+# FM Radio
+BOARD_HAVE_FM_RADIO := false
+
+# NFC
+BOARD_HAVE_NFC := false
 
 # Wifi-related defines
 WPA_BUILD_SUPPLICANT        	:= true
 WPA_SUPPLICANT_VERSION      	:= VER_0_8_X
 BOARD_WLAN_DEVICE           	:= bcmdhd
-BOARD_WLAN_DEVICE_REV 		:= bcm4330_b1
+BOARD_WLAN_DEVICE_REV 			:= bcm4330_b1
 BOARD_WPA_SUPPLICANT_DRIVER     := NL80211
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
 BOARD_HOSTAPD_DRIVER            := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB       := lib_driver_cmd_bcmdhd
 WIFI_DRIVER_MODULE_PATH     	:= "/system/lib/modules/dhd.ko"
-WIFI_DRIVER_FW_PATH_PARAM 	:= "/sys/module/dhd/parameters/firmware_path"
+WIFI_DRIVER_FW_PATH_PARAM 		:= "/sys/module/dhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA     	:= "/system/etc/wifi/bcm4330_sta.bin"
 WIFI_DRIVER_FW_PATH_AP      	:= "/system/etc/wifi/bcm4330_apsta.bin"
 WIFI_DRIVER_FW_PATH_P2P     	:= "/system/etc/wifi/bcm4330_p2p.bin"
 WIFI_DRIVER_MODULE_NAME     	:= "dhd"
 WIFI_DRIVER_MODULE_ARG      	:= "firmware_path=/system/etc/wifi/bcm4330_sta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
-WIFI_BAND                       := 802_11_ABG
+WIFI_BAND                      	:= 802_11_BGN
 BOARD_LEGACY_NL80211_STA_EVENTS := true
 
 # Assert
@@ -130,7 +151,7 @@ BOARD_CHARGER_RES := device/samsung/i927/res/charger
 BOARD_SUPPRESS_EMMC_WIPE := true
 
 # Recovery
-TARGET_RECOVERY_INITRC := device/samsung/i927/recovery/recovery.rc
+TARGET_RECOVERY_INITRC := device/samsung/i927/recovery.rc
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/i927/recovery/recovery_keys.c
 BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/i927/recovery/graphics.c
 

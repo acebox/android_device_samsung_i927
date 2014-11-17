@@ -18,7 +18,7 @@
 $(call inherit-product, vendor/cm/config/gsm.mk)
 
 # Release name
-PRODUCT_RELEASE_NAME := I927 # SGR
+PRODUCT_RELEASE_NAME := SGR
 
 # Inherit some common CM stuff.
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
@@ -26,10 +26,8 @@ $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 # Inherit device configuration
 $(call inherit-product, device/samsung/i927/full_i927.mk)
 
-# hdpi,xhdpi,mdpi,nodpi,  normal,hdpi,nodpi hdpi}
 # Device Locales (default language first, screen resolutions last)
-#PRODUCT_LOCALES := en_US en_GB de_DE es_ES fr_FR it_IT hdpi xhdpi mdpi nodpi
-PRODUCT_LOCALES := en_US en_GB de_DE es_ES fr_FR it_IT xhdpi mdpi
+PRODUCT_LOCALES := en_US en_GB de_DE es_ES fr_FR it_IT hdpi xhdpi mdpi nodpi
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := i927

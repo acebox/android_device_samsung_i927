@@ -16,10 +16,9 @@ lib/egl/libGLESv2_tegra.so
 lib/egl/libGLESv2_perfhud.so
 
 # RIL files
-# bin/rild
 lib/libril.so
-lib/libsecril-client.so
 lib/libsec-ril.so
+lib/libsecril-client.so
 
 # Sensors
 lib/libakm.so
@@ -126,10 +125,6 @@ lib/libsavsvc.so
 lib/libsthmb.so
 
 lib/libstagefrighthw.so
-
-# HDMI
-etc/hdmi/dectable.dat
-etc/hdmi/dectable1.dat
 
 # Camera
 cameradata/datapattern_420sp.yuv
