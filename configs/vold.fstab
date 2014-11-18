@@ -1,14 +1,19 @@
-## Vold 2.0 fstab for n1 - CM10 standard
+## Vold 2.0 fstab for n1
 
 #######################
 ## Regular device mount
 ##
-## Format: dev_mount <label> <mount_point> <part> <sysfs_path1...> 
+## Format: dev_mount <label> <mount_point> <part> <sysfs_path1...>
 ## label        - Label for the volume
 ## mount_point  - Where the volume will be mounted
 ## part         - Partition # (1 based), or 'auto' for first usable partition.
 ## <sysfs_path> - List of sysfs paths to source devices
 ######################
+
+# ace - samsung's UCLJ3 uses /mnt/sdcard and /mnt/sdcard/external_sd for access
+# AOSP uses /emmc for internal and /sdcard for external
+# possible "fix" to recreate OEM behavior and work with AOSP/CM9
+# mount /mnt/emmc normally, then mount external under /mnt/emmc/external_sd, then symlink it to the other areas?  /mnt/sdcard /sdcard etc..
 
 # internal sdcard
 dev_mount emmc /mnt/emmc 4 /devices/platform/sdhci-tegra.3/mmc_host/mmc0/mmc0 nonremovable,encryptable
@@ -18,4 +23,5 @@ dev_mount sdcard /mnt/sdcard auto /devices/platform/sdhci-tegra.2/mmc_host/mmc1
 
 # otg sdcard
 dev_mount usbdisk /mnt/usbdisk auto /devices/platform/tegra-ehci.0/usb
-#end line ## keep this line
+
+#EOF

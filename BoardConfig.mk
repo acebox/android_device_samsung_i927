@@ -23,6 +23,9 @@ NEED_WORKAROUND_CORTEX_A9_745320 := true
 # DO NOT change the following line to vfpv3 as it is not really supported on our device!
 TARGET_ARCH_VARIANT_FPU := vfpv3-d16
 ARCH_ARM_HAVE_TLS_REGISTER := true
+# ace - test
+ARCH_ARM_USE_NON_NEON_MEMCPY := true
+ARCH_ARM_HAVE_NEON := false
 
 #TARGET_HAVE_TEGRA_ERRATA_657451 := true
 TARGET_BOARD_PLATFORM := tegra
@@ -151,7 +154,7 @@ BOARD_CHARGER_RES := device/samsung/i927/res/charger
 BOARD_SUPPRESS_EMMC_WIPE := true
 
 # Recovery
-TARGET_RECOVERY_INITRC := device/samsung/i927/recovery.rc
+TARGET_RECOVERY_INITRC := device/samsung/i927/recovery/recovery.rc
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/i927/recovery/recovery_keys.c
 BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/i927/recovery/graphics.c
 

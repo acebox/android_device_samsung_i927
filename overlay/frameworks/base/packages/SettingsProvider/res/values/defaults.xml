@@ -20,15 +20,23 @@
 	<!-- ace - personal preferences -->
     <bool name="def_auto_time">false</bool>
     <bool name="def_auto_time_zone">false</bool>
+    <!-- 0 == default, 1 == never while plugged, 2 == never -->
+    <integer name="def_wifi_sleep_policy">1</integer>
 
-    <bool name="def_accelerometer_rotation">true</bool>
+    <!--  0 == mobile, 1 == wifi. -->
+    <integer name="def_network_preference">1</integer>
+
     <bool name="def_screen_brightness_automatic_mode">true</bool>
 
     <!-- Unknown Sources on by default -->
     <bool name="def_install_non_market_apps">true</bool>
 
+	<!-- ace - mainly for testing -->
+	<bool name="def_bluetooth_on">true</bool>
+	<bool name="def_wifi_on">true</bool>
+
     <!-- Unlink Notifications and ringer volume -->
-    <bool name="def_notifications_use_ring_volume">false</bool>
+<!--    <bool name="def_notifications_use_ring_volume">false</bool> -->
 
     <!-- Screen timeout default = 60 seconds -->
     <integer name="def_screen_off_timeout">60000</integer>

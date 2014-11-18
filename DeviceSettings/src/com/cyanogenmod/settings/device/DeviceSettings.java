@@ -35,12 +35,6 @@ public class DeviceSettings extends FragmentActivity {
 
     public static final String SHARED_PREFERENCES_BASENAME = "com.cyanogenmod.settings.device";
     public static final String ACTION_UPDATE_PREFERENCES = "com.cyanogenmod.settings.device.UPDATE";
-    public static final String KEY_CABC = "cabc";
-    public static final String KEY_MDNIE_SCENARIO = "mdnie_scenario";
-    public static final String KEY_MDNIE_MODE = "mdnie_mode";
-    public static final String KEY_MDNIE_NEGATIVE = "mdnie_negative";
-    public static final String KEY_MDNIE_OUTDOOR = "mdnie_outdoor";
-    public static final String KEY_PANEL_GAMMA = "panel_gamma";
     public static final String KEY_HSPA = "hspa";
     public static final String KEY_USE_ACCELEROMETER_CALIBRATION = "use_accelerometer_calibration";
     public static final String KEY_CALIBRATE_ACCELEROMETER = "calibrate_accelerometer";
